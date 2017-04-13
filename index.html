@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Websocket</title>
+    <script src="https://unpkg.com/jquery"></script>
+</head>
+<body>
+<input id="name" type="text"/>
+<input type="button" id="sendBtn" value="send"/>
+<input type="button" id="clearBtn" value="clear"/>
+<ul id="msg-list"></ul>
+
+<script>
+  $(function() {
+    var $ul = $('#msg-list');
+    var ws = new WebSocket("wss://test-notifier.yyjinbao.com/webgames?unique_id=fewre");
+    ws.onmessage = function(e) {
+      $('<li>').text(event.data).appendTo($ul);
+    };
+    $('#sendBtn').click(function() {
+      ws.send($('#name').val());
+    });
+    $('#clearBtn').click(function() {
+      $ul.empty();
+    });
+  });
+</script>
+</body>
+</html>
